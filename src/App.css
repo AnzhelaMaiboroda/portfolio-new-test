@@ -1,4 +1,5 @@
 .hero {
+  --nav-h: 79px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -19,12 +20,13 @@
 
 .hero__photo {
   position: absolute;
-  top: -38px;
-  bottom: -38px;
+  top: var(--nav-h);
+  bottom: 0;
   left: 34.3%;
   width: 49.2%;
-  height: calc(100% + 76px);
+  height: calc(100% - var(--nav-h));
   object-fit: cover;
+  object-position: center top;
   pointer-events: none;
 }
 
@@ -38,7 +40,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 60px;
+  height: var(--nav-h);
+  padding: 0 60px;
   border-bottom: 1px solid var(--accent);
 }
 
@@ -168,6 +171,9 @@
 @media (max-width: 900px) {
   .hero {
     padding: 0 16px;
+  }
+  .hero {
+    --nav-h: 64px;
   }
   .nav,
   .content,
