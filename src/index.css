@@ -1,0 +1,19 @@
+:root {
+  --accent: #ffedde;
+  --brown: #2c1e15;
+  --font-display: 'Bona Nova SC', serif;
+  --font-body: 'Roboto Serif', serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--brown);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
