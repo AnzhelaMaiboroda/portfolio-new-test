@@ -16,7 +16,9 @@ const skills = [
 export default function App() {
   return (
     <div className="hero">
-      <img className="hero__photo" src={heroImg} alt="" />
+      <div className="hero__media">
+        <img className="hero__photo" src={heroImg} alt="" />
+      </div>
 
       <header className="nav">
         <a className="nav__logo" href="#top">

@@ -7,27 +7,50 @@
   padding: 0 32px;
   overflow: hidden;
   color: #fff;
-  background: radial-gradient(
-    ellipse 34% 40% at 66.8% 50%,
-    rgba(44, 30, 21, 0.38) 0%,
-    rgba(44, 30, 21, 0.68) 30%,
-    rgba(44, 30, 21, 0.84) 52%,
-    rgba(44, 30, 21, 0.93) 71%,
-    rgba(44, 30, 21, 1) 93%
-  );
   background-color: #2c1e15;
 }
 
-.hero__photo {
+/* Glow behind the model: Figma radial gradient (brown over white),
+   ellipse ~796x566px rotated 25deg, centred at (962, 512) of 1440x1024. */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 66.8vw;
+  width: 110.56vw;
+  height: 78.61vw;
+  transform: translate(-50%, -50%) rotate(25deg);
+  background: radial-gradient(
+    closest-side,
+    rgb(175, 169, 166) 6.7%,
+    rgb(112, 102, 96) 30%,
+    rgb(78, 66, 58) 52%,
+    rgb(59, 46, 37) 71%,
+    rgb(44, 30, 21) 93%
+  );
+  pointer-events: none;
+}
+
+/* Clips the photo so it never overlaps the navigation line */
+.hero__media {
   position: absolute;
   top: var(--nav-h);
+  right: 0;
   bottom: 0;
-  left: 34.3%;
-  width: 49.2%;
-  height: calc(100% - var(--nav-h));
-  object-fit: cover;
-  object-position: center top;
+  left: 0;
+  overflow: hidden;
   pointer-events: none;
+}
+
+/* Position from the Figma frame (1440 wide): left 494, top -38, 708x1062.
+   Scales with the viewport width; the top offset is relative to the hero. */
+.hero__photo {
+  position: absolute;
+  top: calc(-2.639vw - var(--nav-h));
+  left: 34.3vw;
+  width: 49.17vw;
+  aspect-ratio: 708 / 1062;
+  object-fit: cover;
 }
 
 .nav,
@@ -188,8 +211,12 @@
     display: none;
   }
   .hero__photo {
+    top: 0;
     left: 10%;
     width: 90%;
+    height: 100%;
+    aspect-ratio: auto;
+    object-position: center top;
     opacity: 0.55;
   }
   .main {
