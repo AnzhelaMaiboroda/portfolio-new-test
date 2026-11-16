@@ -11,6 +11,10 @@
   box-sizing: border-box;
 }
 
+html {
+  background: var(--brown);
+}
+
 body {
   margin: 0;
   background: var(--brown);
