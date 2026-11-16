@@ -1,5 +1,8 @@
 .hero {
   --nav-h: 79px;
+  --cols: 12;
+  --gap: 24px;
+  --pad: 60px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -7,28 +10,26 @@
   padding: 0 32px;
   overflow: hidden;
   color: #fff;
-  background-color: #2c1e15;
+  /* Figma frame has no solid fill: the brown gradient sits on a light base,
+     which gives the soft glow behind the model */
+  background-color: #fff;
+  background: radial-gradient(
+    60.04% 52.75% at 66.81% 50%,
+    rgba(44, 30, 21, 0.52) 6.73%,
+    rgba(44, 30, 21, 0.68) 30.29%,
+    rgba(44, 30, 21, 0.84) 52.4%,
+    rgba(44, 30, 21, 0.93) 70.67%,
+    #2c1e15 92.79%
+  );
+  background-color: #fff;
 }
 
-/* Glow behind the model: Figma radial gradient (brown over white),
-   ellipse ~796x566px rotated 25deg, centred at (962, 512) of 1440x1024. */
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 66.8vw;
-  width: 110.56vw;
-  height: 78.61vw;
-  transform: translate(-50%, -50%) rotate(25deg);
-  background: radial-gradient(
-    closest-side,
-    rgb(175, 169, 166) 6.7%,
-    rgb(112, 102, 96) 30%,
-    rgb(78, 66, 58) 52%,
-    rgb(59, 46, 37) 71%,
-    rgb(44, 30, 21) 93%
-  );
-  pointer-events: none;
+/* 12-column grid shared by the navigation, hero content and skills bar */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gap);
+  padding: 0 var(--pad);
 }
 
 /* Clips the photo so it never overlaps the navigation line */
@@ -42,14 +43,14 @@
   pointer-events: none;
 }
 
-/* Position from the Figma frame (1440 wide): left 494, top -38, 708x1062.
+/* Position from the Figma frame (1440 wide): left 494, top -38, width 708.
    Scales with the viewport width; the top offset is relative to the hero. */
 .hero__photo {
   position: absolute;
-  top: calc(-2.639vw - var(--nav-h));
+  top: calc(-0.139vw - var(--nav-h));
   left: 34.3vw;
   width: 49.17vw;
-  aspect-ratio: 708 / 1062;
+  aspect-ratio: 1383 / 2000;
   object-fit: cover;
 }
 
@@ -59,16 +60,20 @@
   position: relative;
 }
 
+/* ---------- Navigation ---------- */
 .nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   height: var(--nav-h);
-  padding: 0 60px;
   border-bottom: 1px solid var(--accent);
+  z-index: 2;
+}
+
+.nav__grid {
+  height: 100%;
+  align-items: center;
 }
 
 .nav__logo {
+  grid-column: 1 / span 5;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 32px;
@@ -76,13 +81,15 @@
   letter-spacing: 0.96px;
   color: #fff;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav__menu {
+  grid-column: 6 / -1;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 40px;
-  padding: 8px;
 }
 
 .nav__link {
@@ -92,13 +99,19 @@
   letter-spacing: 0.27px;
   color: #fff;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav__link:hover {
   color: var(--accent);
 }
 
+/* ---------- Language switcher ---------- */
 .lang {
+  position: relative;
+}
+
+.lang__btn {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -113,17 +126,74 @@
   cursor: pointer;
 }
 
+.lang__arrow {
+  transition: transform 0.2s ease;
+}
+
+.lang__arrow--open {
+  transform: rotate(180deg);
+}
+
+.lang__list {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 5;
+  min-width: 96px;
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  border: 1px solid var(--accent);
+  border-radius: 9px;
+  background: rgba(44, 30, 21, 0.96);
+}
+
+.lang__option {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: #fff;
+  font-family: inherit;
+  font-size: 20px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lang__option:hover,
+.lang__option--active {
+  background: var(--accent);
+  color: var(--brown);
+}
+
+.lang__btn:focus-visible,
+.lang__option:focus-visible,
+.nav__link:focus-visible,
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ---------- Hero content ---------- */
 .main {
   flex: 1;
   padding-top: 100px;
 }
 
+.main__grid {
+  position: relative;
+  align-items: start;
+}
+
 .content {
+  grid-column: 1 / span 7;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 60px;
-  padding: 24px 60px;
+  padding: 24px 0;
 }
 
 .text {
@@ -133,12 +203,15 @@
 }
 
 .title {
-  max-width: 561px;
   margin: 0;
   font-weight: 700;
   font-size: 48px;
   line-height: 1.49;
   letter-spacing: 1.92px;
+}
+
+.title__line {
+  display: block;
 }
 
 .tagline {
@@ -169,19 +242,18 @@
   transform: translateX(4px);
 }
 
+/* columns 11–12, centred in them */
 .badge {
-  position: absolute;
-  top: 99.5px;
-  left: 82.7%;
+  grid-column: 11 / span 2;
+  grid-row: 1;
+  justify-self: center;
   width: 124px;
   height: 124px;
+  margin-top: -0.5px;
 }
 
+/* ---------- Skills bar ---------- */
 .skills {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 60px;
   border-top: 1px solid var(--accent);
   background: rgba(44, 30, 21, 0.8);
   font-family: var(--font-display);
@@ -191,21 +263,37 @@
   white-space: nowrap;
 }
 
+.skills__grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.skills__item:first-child {
+  justify-self: start;
+}
+.skills__item:nth-child(n + 2):nth-child(-n + 4) {
+  justify-self: center;
+}
+.skills__item:last-child {
+  justify-self: end;
+}
+
+/* ---------- Tablet / mobile ---------- */
 @media (max-width: 900px) {
   .hero {
+    --cols: 4;
+    --gap: 16px;
+    --pad: 16px;
+    --nav-h: 64px;
     padding: 0 16px;
   }
-  .hero {
-    --nav-h: 64px;
-  }
-  .nav,
-  .content,
-  .skills {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
   .nav__logo {
+    grid-column: 1 / span 3;
     font-size: 22px;
+  }
+  .nav__menu {
+    grid-column: 4 / -1;
   }
   .nav__link {
     display: none;
@@ -222,18 +310,27 @@
   .main {
     padding-top: 48px;
   }
+  .content {
+    grid-column: 1 / -1;
+  }
   .title {
     font-size: 32px;
   }
-  .title__br {
-    display: none;
+  .title__line {
+    display: inline;
   }
   .badge {
     display: none;
   }
   .skills {
-    flex-wrap: wrap;
-    gap: 8px 20px;
     font-size: 16px;
+  }
+  .skills__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 8px;
+    white-space: normal;
+  }
+  .skills__item:nth-child(n) {
+    justify-self: start;
   }
 }
