@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import heroImg from './assets/hero.png'
+import heroImg from './assets/hero.webp'
 import menuDown from './assets/menu-down.svg'
 import arrowRight from './assets/arrow-right.svg'
 import badge from './assets/badge.svg'
@@ -165,3 +165,4 @@ export default function App() {
     </div>
   )
 }
+
