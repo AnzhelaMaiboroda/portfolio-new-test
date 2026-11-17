@@ -272,6 +272,38 @@
   padding-bottom: 16px;
 }
 
+/* ---------- Small laptop / large tablet (901–1120px) ---------- */
+@media (min-width: 901px) and (max-width: 1120px) {
+  .hero {
+    --pad: 32px;
+  }
+  /* text stays in the left 5 columns, clear of the model */
+  .content {
+    grid-column: 1 / span 5;
+    gap: 40px;
+  }
+  .title {
+    font-size: clamp(28px, 3.4vw, 40px);
+    letter-spacing: 0.04em;
+  }
+  .title__line {
+    display: inline;
+  }
+  .tagline {
+    font-size: 20px;
+  }
+  /* no hard edge at the bottom of the photo */
+  .hero__photo {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  }
+  .badge {
+    grid-column: 11 / span 2;
+    width: 100px;
+    height: 100px;
+  }
+}
+
 /* ---------- Tablet / mobile ---------- */
 @media (max-width: 900px) {
   .hero {
@@ -291,17 +323,41 @@
   .nav__link {
     display: none;
   }
-  .hero__photo {
-    top: 0;
-    left: 10%;
-    width: 90%;
-    height: 100%;
-    aspect-ratio: auto;
-    object-position: center top;
-    opacity: 0.55;
+  /* Photo leaves the background: it becomes its own block under the text,
+     spanning the full 4-column grid (same side margins as the text) */
+  .hero__media {
+    position: relative;
+    inset: auto;
+    order: 1;
+    margin: 0 var(--pad);
+    overflow: hidden;
   }
+  .hero__photo {
+    position: static;
+    display: block;
+    width: min(100%, 480px);
+    height: auto;
+    margin: 0 auto;
+    aspect-ratio: 1383 / 2000;
+    object-fit: cover;
+    /* Whole photo is shown (nothing cropped); the lower part dissolves
+       into the background starting from the hand resting on the knees */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 96%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 96%);
+  }
+  .nav {
+    order: 0;
+  }
+  /* Text starts over the faded part of the photo */
   .main {
-    padding-top: 48px;
+    order: 2;
+    margin-top: -18vw;
+    padding-top: 0;
+    padding-bottom: 32px;
+  }
+  .skills {
+    order: 3;
+    background: transparent;
   }
   .content {
     grid-column: 1 / -1;
