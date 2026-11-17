@@ -312,6 +312,14 @@
     --pad: 16px;
     --nav-h: 64px;
     padding: 0 16px;
+    /* Solid brown under the text; the soft glow stays behind the photo only */
+    background: radial-gradient(
+        ellipse 70% 300px at 50% 260px,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.12) 55%,
+        rgba(255, 255, 255, 0) 100%
+      ),
+      #2c1e15;
   }
   .nav__logo {
     grid-column: 1 / span 3;
