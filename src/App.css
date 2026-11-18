@@ -245,11 +245,15 @@
   line-height: 1.4;
   letter-spacing: 0.72px;
   text-decoration: none;
-  transition: transform 0.2s ease;
+  transition: box-shadow 0.25s ease;
 }
 
-.button:hover {
-  transform: translateX(4px);
+/* Soft glow under the button; the button itself does not move.
+   Pointer devices only, so touch screens get no sticky hover */
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    box-shadow: 0 10px 24px -4px rgba(255, 237, 222, 0.45);
+  }
 }
 
 /* columns 11–12, centred in them */
@@ -388,6 +392,12 @@
   }
   .badge {
     display: none;
+  }
+  /* One fixed button size for both languages */
+  .button {
+    box-sizing: border-box;
+    width: min(100%, 303px);
+    justify-content: center;
   }
   .skills {
     font-size: 16px;
