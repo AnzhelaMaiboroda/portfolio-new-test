@@ -162,10 +162,20 @@
   cursor: pointer;
 }
 
-.lang__option:hover,
+/* Selected language: filled, stays fixed after the click */
 .lang__option--active {
   background: var(--accent);
   color: var(--brown);
+}
+
+/* Hover only on devices that really have it (no sticky hover on touch) */
+@media (hover: hover) and (pointer: fine) {
+  .lang__option {
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .lang__option:not(.lang__option--active):hover {
+    background: rgba(255, 237, 222, 0.2);
+  }
 }
 
 .lang__btn:focus-visible,
