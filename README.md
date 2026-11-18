@@ -1,32 +1,65 @@
-# React + TypeScript + Vite
+# Yeva Martynyuk — портфоліо
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Двомовне (🇺🇦 / 🇬🇧) сайт-портфоліо UI/UX-дизайнерки на межі архітектури й діджитал. Створене для пошуку стажування в студіях, що поєднують архітектуру та цифрові продукти.
 
-Currently, two official plugins are available:
+**🔗 Живий сайт:** [portfolio-new-test-six.vercel.app](https://portfolio-new-test-six.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Перший екран сайту](docs/screenshot.png)
 
-## React Compiler
+## Ідея
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+> «Цифровий досвід як архітектурний маршрут: логіка, масштаб і відчуття простору.»
 
-## Expanding the Oxlint configuration
+Користувацький шлях проєктується так, як архітектор проєктує рух будівлею: з входом, поворотами, паузами й зрозумілим виходом. Перший екран одразу показує, хто це, як вона мислить, і веде до робіт. Детальний план сайту: [docs/plan.md](docs/plan.md).
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Що вже є
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+- Перший екран за макетом у Figma: навігація, заголовок, кнопка «View works», бейдж «UI/UX Designer», панель навичок.
+- Перемикач мови UA / EN. Мова запам'ятовується в браузері, а першого разу визначається за мовою системи.
+- Адаптивна сітка на 12 колонок (десктоп) і 4 колонки (планшет, мобільний). Пристрої ≤900px мають окрему композицію: фото над текстом з плавним переходом у фон.
+- Мета-дані сторінки та атрибут `lang` змінюються разом із мовою.
+
+## Технології
+
+| Що | Для чого |
+| --- | --- |
+| [React 19](https://react.dev) | інтерфейс |
+| [TypeScript](https://www.typescriptlang.org) | типізація |
+| [Vite](https://vite.dev) | збірка та dev-сервер |
+| CSS (без фреймворків) | сітка, адаптивність, градієнти |
+| [Oxlint](https://oxc.rs) | лінтинг |
+| Google Fonts: Bona Nova SC, Roboto Serif | типографіка (з кирилицею) |
+| [Figma](https://www.figma.com) | макет |
+| [Vercel](https://vercel.com) | хостинг |
+
+## Запуск локально
+
+Потрібен Node.js 22 або новіший.
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Сайт відкриється на `http://localhost:5173`.
+
+Інші команди:
+
+```bash
+npm run build    # перевірка типів і production-збірка у dist/
+npm run preview  # локальний перегляд збірки
+npm run lint     # лінтинг
+```
+
+## Структура
+
+```
+src/
+  App.tsx      # сторінка та перемикач мови
+  App.css      # розкладка, сітка, адаптивність
+  i18n.ts      # тексти UA / EN
+  index.css    # змінні, шрифти, базові стилі
+  assets/      # фото, іконки
+docs/
+  plan.md      # план сайту й позиціонування
+```
