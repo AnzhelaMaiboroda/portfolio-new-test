@@ -1,8 +1,54 @@
 :root {
-  --accent: #ffedde;
-  --brown: #2c1e15;
+  /* ---------- Colour (by role) ---------- */
+  --canvas: #2c1e15; /* page background; text on accent */
+  --canvas-rgb: 44, 30, 21; /* same colour for rgba() with alpha */
+  --surface: #3d2f25; /* raised surfaces: hover fills, cards, fields */
+  --accent: #ffedde; /* buttons, hover, focus ring, decorative lines */
+  --line: var(--accent); /* decorative dividers and card borders */
+  --text: #ffffff; /* primary text */
+  --text-muted: #b5a598; /* secondary text, borders of outlined controls */
+  --danger: #ff7a85; /* errors */
+
+  /* ---------- Fonts ---------- */
   --font-display: 'Bona Nova SC', serif;
   --font-body: 'Roboto Serif', serif;
+
+  /* ---------- Type scale (sizes taken from the layout) ---------- */
+  --fs-caption: 16px;
+  --fs-label: 18px; /* menu links */
+  --fs-body: 20px; /* skills, list options */
+  --fs-lead: 22px; /* tagline */
+  --fs-button: 24px; /* buttons, language switcher */
+  --fs-heading: 32px; /* logo */
+  --fs-display: 48px; /* hero title */
+
+  --lh: 1.4;
+  --lh-display: 1.49;
+
+  --tr-label: 0.015em;
+  --tr-body: 0.03em;
+  --tr-lead: 0.02em;
+  --tr-button: 0.03em;
+  --tr-heading: 0.03em;
+  --tr-display: 0.04em;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* ---------- Spacing: multiples of 8 ---------- */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+
+  /* ---------- Radius ---------- */
+  --radius-control: 9px; /* buttons, popups */
+  --radius-inner: 6px; /* items inside a popup */
+
+  /* ---------- Images ---------- */
+  --ratio-portrait: 1668 / 2000;
 }
 
 *,
@@ -12,12 +58,12 @@
 }
 
 html {
-  background: var(--brown);
+  background: var(--canvas);
 }
 
 body {
   margin: 0;
-  background: var(--brown);
+  background: var(--canvas);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }

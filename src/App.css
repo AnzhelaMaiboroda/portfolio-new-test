@@ -1,27 +1,44 @@
 .hero {
-  --nav-h: 79px;
+  /* Layout measurements from the Figma frame, snapped to the 8px grid */
+  --nav-h: 80px;
   --cols: 12;
-  --gap: 24px;
-  --pad: 60px;
+  --gap: var(--space-3);
+  --pad: 64px;
+  --hero-top: 88px;
+  --content-top: 64px;
+  --content-bottom: 144px;
+  --content-gap: 64px;
   position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 0 32px;
+  padding: 0 var(--space-4);
   overflow: hidden;
-  color: #fff;
-  /* Figma frame has no solid fill: the brown gradient sits on a light base,
-     which gives the soft glow behind the model */
+  color: var(--text);
+  /* Light base under the gradient below: it gives the soft glow behind the model */
   background-color: #fff;
+}
+
+/* Rotated elliptical gradient from the Figma frame (1440 wide): centre at
+   (1100, 569), radii 726 x 517, long axis turned 47deg. The box is oversized so
+   the last (solid) stop covers the rest of the hero; sizes scale with the width. */
+.hero::before {
+  content: '';
+  position: absolute;
+  left: 76.4%;
+  top: 55.6%;
+  width: 300vw;
+  height: 300vw;
+  transform: translate(-50%, -50%) rotate(47deg);
+  pointer-events: none;
   background: radial-gradient(
-    60.04% 52.75% at 66.81% 50%,
-    rgba(44, 30, 21, 0.52) 6.73%,
-    rgba(44, 30, 21, 0.68) 30.29%,
-    rgba(44, 30, 21, 0.84) 52.4%,
-    rgba(44, 30, 21, 0.93) 70.67%,
-    #2c1e15 92.79%
+    ellipse 50.4vw 35.9vw at 50% 50%,
+    rgba(var(--canvas-rgb), 0.62) 6.73%,
+    rgba(var(--canvas-rgb), 0.7) 30.29%,
+    rgba(var(--canvas-rgb), 0.84) 52.4%,
+    rgba(var(--canvas-rgb), 0.93) 70.67%,
+    var(--canvas) 92.79%
   );
-  background-color: #fff;
 }
 
 /* 12-column grid shared by the navigation, hero content and skills bar */
@@ -37,20 +54,22 @@
   position: absolute;
   top: var(--nav-h);
   right: 0;
-  bottom: 0;
+  /* ends exactly at the skills line (2 x 16px padding + one 20px/1.4 line + 1px border) */
+  bottom: calc(var(--space-2) * 2 + var(--fs-body) * var(--lh) + 1px);
   left: 0;
   overflow: hidden;
   pointer-events: none;
 }
 
-/* Position from the Figma frame (1440 wide): left 494, top -38, width 708.
-   Scales with the viewport width; the top offset is relative to the hero. */
+/* Anchored to the bottom of the clipped area so the fingertips always rest on
+   the skills line, whatever the viewport height; size and offset scale with
+   the viewport width (tuned on the 1440 x 1024 frame). */
 .hero__photo {
   position: absolute;
-  top: calc(-0.139vw - var(--nav-h));
-  left: 34.3vw;
-  width: 49.17vw;
-  aspect-ratio: 1383 / 2000;
+  bottom: -2.78vw;
+  left: 40.9vw;
+  width: 57.6vw;
+  aspect-ratio: var(--ratio-portrait);
   object-fit: cover;
 }
 
@@ -63,7 +82,7 @@
 /* ---------- Navigation ---------- */
 .nav {
   height: var(--nav-h);
-  border-bottom: 1px solid var(--accent);
+  border-bottom: 1px solid var(--line);
   z-index: 2;
 }
 
@@ -75,11 +94,11 @@
 .nav__logo {
   grid-column: 1 / span 5;
   font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 1.4;
-  letter-spacing: 0.96px;
-  color: #fff;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-heading);
+  line-height: var(--lh);
+  letter-spacing: var(--tr-heading);
+  color: var(--text);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -89,15 +108,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 40px;
+  gap: var(--space-5);
 }
 
 .nav__link {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 1.4;
-  letter-spacing: 0.27px;
-  color: #fff;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-label);
+  line-height: var(--lh);
+  letter-spacing: var(--tr-label);
+  color: var(--text);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -114,15 +133,15 @@
 .lang__btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-1);
   padding: 0;
   border: 0;
   background: none;
-  color: #fff;
+  color: var(--text);
   font-family: inherit;
-  font-size: 24px;
-  line-height: 1.4;
-  letter-spacing: 0.36px;
+  font-size: var(--fs-button);
+  line-height: var(--lh);
+  letter-spacing: var(--tr-label);
   cursor: pointer;
 }
 
@@ -136,28 +155,28 @@
 
 .lang__list {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + var(--space-1));
   right: 0;
   z-index: 5;
   min-width: 96px;
   margin: 0;
-  padding: 8px;
+  padding: var(--space-1);
   list-style: none;
-  border: 1px solid var(--accent);
-  border-radius: 9px;
-  background: rgba(44, 30, 21, 0.96);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--canvas);
 }
 
 .lang__option {
   display: block;
   width: 100%;
-  padding: 8px 12px;
+  padding: var(--space-1) var(--space-2);
   border: 0;
-  border-radius: 6px;
+  border-radius: var(--radius-inner);
   background: none;
-  color: #fff;
+  color: var(--text);
   font-family: inherit;
-  font-size: 20px;
+  font-size: var(--fs-body);
   text-align: left;
   cursor: pointer;
 }
@@ -165,7 +184,7 @@
 /* Selected language: filled, stays fixed after the click */
 .lang__option--active {
   background: var(--accent);
-  color: var(--brown);
+  color: var(--canvas);
 }
 
 /* Hover only on devices that really have it (no sticky hover on touch) */
@@ -174,7 +193,7 @@
     transition: background-color 0.2s ease, color 0.2s ease;
   }
   .lang__option:not(.lang__option--active):hover {
-    background: rgba(255, 237, 222, 0.2);
+    background: var(--surface);
   }
 }
 
@@ -189,35 +208,39 @@
 /* ---------- Hero content ---------- */
 .main {
   flex: 1;
-  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--hero-top);
 }
 
 .main__grid {
   position: relative;
-  align-items: start;
+  flex: 1;
 }
 
+/* Text and button are centred vertically in the space under the navigation */
 .content {
   grid-column: 1 / span 7;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 60px;
-  padding: 24px 0;
+  justify-content: center;
+  gap: var(--content-gap);
+  padding: var(--content-top) 0 var(--content-bottom);
 }
 
 .text {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--space-4);
 }
 
 .title {
   margin: 0;
-  font-weight: 700;
-  font-size: 48px;
-  line-height: 1.49;
-  letter-spacing: 1.92px;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tr-display);
 }
 
 .title__line {
@@ -227,23 +250,23 @@
 .tagline {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 22px;
-  line-height: 1.4;
-  letter-spacing: 0.44px;
+  font-size: var(--fs-lead);
+  line-height: var(--lh);
+  letter-spacing: var(--tr-lead);
 }
 
 .button {
   display: inline-flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 9px;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-control);
   background: var(--accent);
-  color: var(--brown);
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 1.4;
-  letter-spacing: 0.72px;
+  color: var(--canvas);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-button);
+  line-height: var(--lh);
+  letter-spacing: var(--tr-button);
   text-decoration: none;
   transition: box-shadow 0.25s ease;
 }
@@ -252,28 +275,18 @@
    Pointer devices only, so touch screens get no sticky hover */
 @media (hover: hover) and (pointer: fine) {
   .button:hover {
-    box-shadow: 0 10px 24px -4px rgba(255, 237, 222, 0.45);
+    box-shadow: 0 10px 24px -4px color-mix(in srgb, var(--accent) 45%, transparent);
   }
-}
-
-/* columns 11–12, centred in them */
-.badge {
-  grid-column: 11 / span 2;
-  grid-row: 1;
-  justify-self: center;
-  width: 124px;
-  height: 124px;
-  margin-top: -0.5px;
 }
 
 /* ---------- Skills bar ---------- */
 .skills {
-  border-top: 1px solid var(--accent);
-  background: rgba(44, 30, 21, 0.8);
+  border-top: 1px solid var(--line);
+  background: rgba(var(--canvas-rgb), 0.8);
   font-family: var(--font-display);
-  font-size: 20px;
-  line-height: 1.4;
-  letter-spacing: 0.6px;
+  font-size: var(--fs-body);
+  line-height: var(--lh);
+  letter-spacing: var(--tr-body);
   white-space: nowrap;
 }
 
@@ -282,39 +295,33 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
 }
 
 /* ---------- Small laptop / large tablet (901–1120px) ---------- */
 @media (min-width: 901px) and (max-width: 1120px) {
   .hero {
-    --pad: 32px;
+    --pad: var(--space-4);
+    --content-gap: var(--space-5);
   }
   /* text stays in the left 5 columns, clear of the model */
   .content {
     grid-column: 1 / span 5;
-    gap: 40px;
   }
   .title {
     font-size: clamp(28px, 3.4vw, 40px);
-    letter-spacing: 0.04em;
   }
   .title__line {
     display: inline;
   }
   .tagline {
-    font-size: 20px;
+    font-size: var(--fs-body);
   }
   /* no hard edge at the bottom of the photo */
   .hero__photo {
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
-  }
-  .badge {
-    grid-column: 11 / span 2;
-    width: 100px;
-    height: 100px;
   }
 }
 
@@ -322,22 +329,25 @@
 @media (max-width: 900px) {
   .hero {
     --cols: 4;
-    --gap: 16px;
-    --pad: 16px;
+    --gap: var(--space-2);
+    --pad: var(--space-2);
     --nav-h: 64px;
-    padding: 0 16px;
-    /* Solid brown under the text; the soft glow stays behind the photo only */
+    padding: 0 var(--space-2);
+    /* Solid canvas under the text; the soft glow stays behind the photo only */
     background: radial-gradient(
         ellipse 70% 300px at 50% 260px,
         rgba(255, 255, 255, 0.3) 0%,
         rgba(255, 255, 255, 0.12) 55%,
         rgba(255, 255, 255, 0) 100%
       ),
-      #2c1e15;
+      var(--canvas);
+  }
+  .hero::before {
+    display: none;
   }
   .nav__logo {
     grid-column: 1 / span 3;
-    font-size: 22px;
+    font-size: var(--fs-lead);
   }
   .nav__menu {
     grid-column: 4 / -1;
@@ -360,7 +370,7 @@
     width: min(100%, 480px);
     height: auto;
     margin: 0 auto;
-    aspect-ratio: 1383 / 2000;
+    aspect-ratio: var(--ratio-portrait);
     object-fit: cover;
     /* Whole photo is shown (nothing cropped); the lower part dissolves
        into the background starting from the hand resting on the knees */
@@ -375,7 +385,7 @@
     order: 2;
     margin-top: -18vw;
     padding-top: 0;
-    padding-bottom: 32px;
+    padding-bottom: var(--space-4);
   }
   .skills {
     order: 3;
@@ -383,15 +393,14 @@
   }
   .content {
     grid-column: 1 / -1;
+    justify-content: flex-start;
+    padding: var(--space-3) 0;
   }
   .title {
-    font-size: 32px;
+    font-size: var(--fs-heading);
   }
   .title__line {
     display: inline;
-  }
-  .badge {
-    display: none;
   }
   /* One fixed button size for both languages */
   .button {
@@ -400,11 +409,11 @@
     justify-content: center;
   }
   .skills {
-    font-size: 16px;
+    font-size: var(--fs-caption);
   }
   .skills__grid {
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 8px 24px;
+    gap: var(--space-1) var(--space-3);
   }
 }

@@ -20,7 +20,6 @@ export const translations = {
     ],
     tagline: '«Архітектура + діджитал»',
     cta: 'Дивитися роботи',
-    badgeAlt: 'UI/UX Designer, Yeva Martynyuk',
     skills: ['Figma', 'Web Design', 'UX Research', 'Design Systems', 'Interaction Design'],
   },
   en: {
@@ -36,7 +35,6 @@ export const translations = {
     ],
     tagline: '«Architecture + digital»',
     cta: 'View works',
-    badgeAlt: 'UI/UX Designer, Yeva Martynyuk',
     skills: ['Figma', 'Web Design', 'UX Research', 'Design Systems', 'Interaction Design'],
   },
 } as const

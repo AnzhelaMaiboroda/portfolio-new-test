@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import heroImg from './assets/hero.webp'
 import menuDown from './assets/menu-down.svg'
 import arrowRight from './assets/arrow-right.svg'
-import badge from './assets/badge.svg'
 import { LANGS, translations, type Lang } from './i18n'
 import './App.css'
 
@@ -149,7 +148,6 @@ export default function App() {
               <img src={arrowRight} alt="" width={24} height={24} />
             </a>
           </div>
-          <img className="badge" src={badge} alt={t.badgeAlt} />
         </div>
       </main>
 
